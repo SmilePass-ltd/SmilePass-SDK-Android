@@ -102,4 +102,4 @@ For the detailed information on how to register and verify a user using SmilePas
 
 
 ## License
-SmilePass Android SDK sample application is licensed with the MIT License. For more details, see [LICENSE](https://github.com/SmilePass-ltd/SmilePass-SDK-Android/blob/master/LICENSE).
+SmilePass Android SDK sample application is licensed with the SmilePass License. For more details, see [LICENSE]().
