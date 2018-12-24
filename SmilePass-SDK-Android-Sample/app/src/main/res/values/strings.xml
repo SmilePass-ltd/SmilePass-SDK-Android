@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">SmilePass SDK Sample</string>
+    <string name="verify_button_text">verify</string>
+    <string name="register_button_text">Register</string>
+    <string name="submit_button_text">Submit Document Registration</string>
+    <string name="selfie_submit_button">Submit Selfie Registration</string>
+    <string name="selfie_verify_button">Submit to Verify User</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+
+    <string-array name="documents">
+        <item>Driving Licence</item>
+        <item>Passport</item>
+    </string-array>
+
 </resources>

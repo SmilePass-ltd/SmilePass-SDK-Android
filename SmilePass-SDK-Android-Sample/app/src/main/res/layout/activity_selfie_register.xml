@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.smilepass.smilepasssdksample.activity.SelfieRegistrationActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:text="Register with Selfie"
+            android:textSize="18sp"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <ProgressBar
+        android:id="@+id/indeterminateBar"
+        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:indeterminateOnly="true"
+        android:progressBackgroundTint="@color/colorWhite"
+        android:progressTint="@color/colorAccent"
+        android:layout_height="10dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
+    <ScrollView
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/toolbar"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+            <EditText
+                android:id="@+id/selfie_uniquekey_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginVertical="10dp"
+                android:hint="Unique Key"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/callbackUrl_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginVertical="10dp"
+                android:hint="Callback URL"
+                android:inputType="textUri" />
+
+            <EditText
+                android:id="@+id/selfie_url_1_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textUri"
+                android:layout_marginVertical="10dp"
+                android:hint="Selfie Image URL 1"/>
+
+
+            <EditText
+                android:id="@+id/selfie_url_2_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginVertical="10dp"
+                android:inputType="textUri"
+                android:hint="Selfie Image URL 2"/>
+
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:onClick="registerWithSelfie"
+                android:layout_height="wrap_content"
+                android:text="@string/selfie_submit_button"/>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
