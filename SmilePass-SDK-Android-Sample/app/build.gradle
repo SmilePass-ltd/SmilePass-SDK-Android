@@ -23,10 +23,10 @@ android {
 }
 
 dependencies {
-    //Smilepass SDK Dependency.
-    implementation 'com.smilepass.mobilesdk:smilepass:0.0.2-alpha'
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //SmilePass SDK Dependency.
+    implementation 'com.smilepass.mobilesdk:smilepass:0.0.2-alpha'
 
     //Constraint layout dependency
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

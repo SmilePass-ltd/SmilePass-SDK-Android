@@ -13,15 +13,15 @@ import com.smilepass.mobilesdk.main.SmilePassRestClient;
 
 public class MyApplication extends Application {
 
+    private final static String API_KEY = "{{API KEY}}";
+    private final static String SMILE_PASS_SERVER_URL = "{{SERVER_UR}}";
     private SmilePassClient smilePassClient;
-
-    private final String smilePassApiKey = "YOUR API KEY";
 
     @Override
     public void onCreate() {
         super.onCreate();
         try {
-            this.smilePassClient = new SmilePassRestClient(smilePassApiKey, "SMILE PASS SERVER URL");
+            this.smilePassClient = new SmilePassRestClient(API_KEY, SMILE_PASS_SERVER_URL);
         } catch (ClientException e) {
             e.printStackTrace();
         }

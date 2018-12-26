@@ -5,8 +5,8 @@
 
 package com.smilepass.smilepasssdksample.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,47 +20,44 @@ import com.smilepass.mobilesdk.main.SmilePassClient;
 import com.smilepass.mobilesdk.model.ServerError;
 import com.smilepass.smilepasssdksample.MyApplication;
 import com.smilepass.smilepasssdksample.R;
-import com.smilepass.smilepasssdksample.util.DialogUtils;
+import com.smilepass.smilepasssdksample.utils.DialogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class VerificationActivity extends AppCompatActivity implements OnVerificationResponseListener {
-
+    private final static String TAG = VerificationActivity.class.getSimpleName();
     private EditText uniqueKeyField, selfieImageUrlField;
     private Button verifyButton;
-
     private ProgressBar loadingBar;
-
-    private final String TAG = "VERIFY USER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_user);
-
-        initResources();
-
-        //hiding progress bar.
-        loadingBar.setVisibility(View.GONE);
-
-        selfieImageUrlField.setText("https://ga-core.s3.amazonaws.com/production/uploads/instructor/image/14769/thumb_AAEAAQAAAAAAAAH_AAAAJDE0M2I3OWMzLTM1MGItNDE2OC04MjNkLWYxZmNiMTQyNmU1Zg.jpg");
+        initView();
     }
 
-    private void initResources() {
+    private void initView() {
         uniqueKeyField = findViewById(R.id.verify_uniquekey_field);
         selfieImageUrlField = findViewById(R.id.selfie_image_url);
         verifyButton = findViewById(R.id.verifyButton);
         loadingBar = findViewById(R.id.verifyUser_indeterminateBar);
+
+        loadingBar.setVisibility(View.GONE);
     }
 
     public void verifyUserClick(View view) {
-        SmilePassClient smilePassClient = ((MyApplication)getApplication()).getSmilePassClient();
+        SmilePassClient smilePassClient = ((MyApplication) getApplication()).getSmilePassClient();
+        if (smilePassClient == null) {
+            DialogUtils.openDialogToShowMessage(this, getString(R.string.smilepass_client_not_initialized));
+            return;
+        }
         JSONObject registrationData = getRegistrationJson();
         try {
             setFieldsEnabled(false);
             loadingBar.setVisibility(View.VISIBLE);
-            Log.d(TAG, "JSON Going: "+registrationData.toString());
+            Log.d(TAG, "verifyUserClick(): Input JSON=" + registrationData.toString());
             smilePassClient.verify(registrationData, this);
         } catch (ClientException e) {
             e.printStackTrace();
@@ -90,16 +87,16 @@ public class VerificationActivity extends AppCompatActivity implements OnVerific
             if (throwable instanceof ServerException) {
                 ServerError serverError = ((ServerException) throwable).error;
                 if (serverError.getErrorMessage() != null)
-                    DialogUtils.openDialogToShowMessage(this,"Server Error Occurred", serverError.getErrorMessage());
+                    DialogUtils.openDialogToShowMessage(this, getString(R.string.server_error), serverError.getErrorMessage());
                 else
-                    DialogUtils.openDialogToShowMessage(this, "Server Error Occurred");
+                    DialogUtils.openDialogToShowMessage(this, getString(R.string.server_error));
             } else {
-                DialogUtils.openDialogToShowMessage(this, "An unexpected Error Occurred");
+                DialogUtils.openDialogToShowMessage(this, getString(R.string.unexpected_error));
             }
         } else {
             try {
-                String confidenceScore = jsonObject.getString("confidenceScore");
-                DialogUtils.openDialogToShowMessage(this, "Verification Success", "User is successfully verified with confidence score: "+confidenceScore);
+                float confidenceScore = (float) jsonObject.getDouble("confidenceScore");
+                DialogUtils.openDialogToShowMessage(this, getString(R.string.server_error), getString(R.string.verification_success_with_confidence_x, confidenceScore));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -107,7 +104,7 @@ public class VerificationActivity extends AppCompatActivity implements OnVerific
     }
 
 
-    private void setFieldsEnabled (boolean enabled) {
+    private void setFieldsEnabled(boolean enabled) {
         this.uniqueKeyField.setEnabled(enabled);
         this.selfieImageUrlField.setEnabled(enabled);
         this.verifyButton.setEnabled(enabled);

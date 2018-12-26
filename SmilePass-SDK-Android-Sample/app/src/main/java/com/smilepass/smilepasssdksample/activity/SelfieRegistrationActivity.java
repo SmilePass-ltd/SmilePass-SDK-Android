@@ -7,8 +7,8 @@ package com.smilepass.smilepasssdksample.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,48 +22,43 @@ import com.smilepass.mobilesdk.main.SmilePassClient;
 import com.smilepass.mobilesdk.model.ServerError;
 import com.smilepass.smilepasssdksample.MyApplication;
 import com.smilepass.smilepasssdksample.R;
-import com.smilepass.smilepasssdksample.util.DialogUtils;
+import com.smilepass.smilepasssdksample.utils.DialogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SelfieRegistrationActivity extends AppCompatActivity implements OnRegistrationResponseListener, DialogInterface.OnClickListener {
-
+    private final static String TAG = SelfieRegistrationActivity.class.getSimpleName();
     private EditText uniqueKeyField, callbackUrlField, selfieImageUrlField1, selfieImageUrlField2;
     private Button registerButton;
-
     private ProgressBar loadingBar;
-
-    private final String TAG = "SELFIE REGISTRATION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selfie_register);
-
-        String uniqueKey = "";
-        if(getIntent().hasExtra("uniqueKey")) uniqueKey =  getIntent().getExtras().getString("uniqueKey");
-
-        initResources();
-
-        this.loadingBar.setVisibility(View.GONE);
-        this.uniqueKeyField.setText(uniqueKey);
-
-        //TODO: Comment below lines for QA/Build
-        this.selfieImageUrlField1.setText("https://ga-core.s3.amazonaws.com/production/uploads/instructor/image/14769/thumb_AAEAAQAAAAAAAAH_AAAAJDE0M2I3OWMzLTM1MGItNDE2OC04MjNkLWYxZmNiMTQyNmU1Zg.jpg");
-        this.selfieImageUrlField2.setText("https://i1.wp.com/smile-pass.com/wp-content/uploads/2018/07/Cto.jpg?resize=540%2C429&ssl=1");
-        this.callbackUrlField.setText("https://webhook.site/091b56f3-0058-4134-95f8-20458d5306af");
-
+        initView();
+        handleInputIntent();
     }
 
-    private void initResources() {
+    private void initView() {
         this.uniqueKeyField = findViewById(R.id.selfie_uniquekey_field);
         this.selfieImageUrlField1 = findViewById(R.id.selfie_url_1_text);
         this.selfieImageUrlField2 = findViewById(R.id.selfie_url_2_text);
         this.callbackUrlField = findViewById(R.id.callbackUrl_field);
         this.registerButton = findViewById(R.id.register_button);
         this.loadingBar = findViewById(R.id.indeterminateBar);
+
+        this.loadingBar.setVisibility(View.GONE);
+    }
+
+    private void handleInputIntent() {
+        String uniqueKey = "";
+        if (getIntent().hasExtra("uniqueKey"))
+            uniqueKey = getIntent().getExtras().getString("uniqueKey");
+
+        this.uniqueKeyField.setText(uniqueKey);
     }
 
     @Override
@@ -76,25 +71,29 @@ public class SelfieRegistrationActivity extends AppCompatActivity implements OnR
                 ServerError serverError = ((ServerException) throwable).error;
                 Log.e(TAG, serverError.getErrorMessage());
                 if (serverError.getErrorMessage() != null) {
-                    DialogUtils.openDialogToShowMessage(this,"Server Error Occurred", serverError.getErrorMessage());
+                    DialogUtils.openDialogToShowMessage(this, getString(R.string.server_error), serverError.getErrorMessage());
                 } else {
-                    DialogUtils.openDialogToShowMessage(this, "Server Error Occurred");
+                    DialogUtils.openDialogToShowMessage(this, getString(R.string.server_error));
                 }
             } else {
-                DialogUtils.openDialogToShowMessage(this, "An unexpected Error Occurred");
+                DialogUtils.openDialogToShowMessage(this, getString(R.string.unexpected_error));
             }
         } else {
-            DialogUtils.openDialogWithOkBtn(this, "Registration Success", "Document is successfully registered with us.", this);
+            DialogUtils.openDialogWithOkBtn(this, getString(R.string.registration_success), getString(R.string.selfie_registration_success), this);
         }
     }
 
     public void registerWithSelfie(View view) {
-        SmilePassClient smilePassClient = ((MyApplication)getApplication()).getSmilePassClient();
+        SmilePassClient smilePassClient = ((MyApplication) getApplication()).getSmilePassClient();
+        if (smilePassClient == null) {
+            DialogUtils.openDialogToShowMessage(this, getString(R.string.smilepass_client_not_initialized));
+            return;
+        }
         JSONObject registrationData = getRegistrationJson();
         try {
             setFieldsEnabled(false);
             loadingBar.setVisibility(View.VISIBLE);
-            Log.d(TAG, "JSON Going for selfie registration: "+registrationData.toString());
+            Log.d(TAG, "JSON Going for selfie registration: " + registrationData.toString());
             smilePassClient.register(registrationData, this);
         } catch (ClientException e) {
             e.printStackTrace();
@@ -111,7 +110,7 @@ public class SelfieRegistrationActivity extends AppCompatActivity implements OnR
         try {
             jsonObject.put("step", "selfie");
             jsonObject.put("uniqueKey", uniqueKey);
-            jsonObject.put("callbackUrl",callbackURL); //optional
+            jsonObject.put("callbackUrl", callbackURL); //optional
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(selfieImage1);
             jsonArray.put(selfieImage2);
@@ -123,7 +122,7 @@ public class SelfieRegistrationActivity extends AppCompatActivity implements OnR
     }
 
 
-    private void setFieldsEnabled (boolean enabled) {
+    private void setFieldsEnabled(boolean enabled) {
         this.uniqueKeyField.setEnabled(enabled);
         this.selfieImageUrlField2.setEnabled(enabled);
         this.selfieImageUrlField1.setEnabled(enabled);
