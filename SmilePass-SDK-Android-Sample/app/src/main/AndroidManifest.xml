@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".activity.DocumentRegistrationActivity" />
         <activity android:name=".activity.SelfieRegistrationActivity" />
-        <activity android:name=".activity.VerificationActivity"></activity>
+        <activity android:name=".activity.VerificationActivity"/>
     </application>
 
 </manifest>

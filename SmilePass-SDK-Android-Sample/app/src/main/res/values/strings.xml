@@ -13,10 +13,13 @@
     <string name="server_error">Server Error Occurred</string>
     <string name="unexpected_error">An unexpected Error Occurred</string>
     <string name="registration_success">Registration Success</string>
+    <string name="verified_successfully">Verified Successfully</string>
     <string name="registration_success_message">Document is successfully registered with us.</string>
     <string name="selfie_registration_success">Your registration request has been submitted successfully.</string>
-    <string name="verification_success_with_confidence_x">User is successfully verified with confidence score: %f</string>
+    <string name="verification_success_with_confidence_x">User is successfully verified with confidence score: %s</string>
     <string name="smilepass_client_not_initialized">SmilePass client is not initialized properly. Please pass valid API key and server URL.</string>
+    <string name="front_image_url">Front Image URL</string>
+    <string name="back_image_url">Back Image URL</string>
 
 
     <string-array name="documents">

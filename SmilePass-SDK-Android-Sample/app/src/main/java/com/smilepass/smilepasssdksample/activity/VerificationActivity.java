@@ -80,9 +80,9 @@ public class VerificationActivity extends AppCompatActivity implements OnVerific
 
     @Override
     public void onVerificationResponse(JSONObject jsonObject, Throwable throwable) {
+        Log.d(TAG, "onVerificationResponse(): jsonObject=" + jsonObject + ", throwable=" + throwable);
         setFieldsEnabled(true);
         loadingBar.setVisibility(View.GONE);
-
         if (throwable != null) {
             if (throwable instanceof ServerException) {
                 ServerError serverError = ((ServerException) throwable).error;
@@ -95,19 +95,23 @@ public class VerificationActivity extends AppCompatActivity implements OnVerific
             }
         } else {
             try {
-                float confidenceScore = (float) jsonObject.getDouble("confidenceScore");
-                DialogUtils.openDialogToShowMessage(this, getString(R.string.server_error), getString(R.string.verification_success_with_confidence_x, confidenceScore));
+                boolean status = jsonObject.getBoolean("status");
+                if (status) {
+                    float confidenceScore = (float) jsonObject.getDouble("confidenceScore");
+                    DialogUtils.openDialogToShowMessage(this, getString(R.string.verified_successfully), getString(R.string.verification_success_with_confidence_x, String.format("%.2f", confidenceScore)));
+                } else {
+                    String message = jsonObject.getString("message");
+                    DialogUtils.openDialogToShowMessage(this, getString(R.string.server_error), message);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-
     private void setFieldsEnabled(boolean enabled) {
         this.uniqueKeyField.setEnabled(enabled);
         this.selfieImageUrlField.setEnabled(enabled);
         this.verifyButton.setEnabled(enabled);
     }
-
 }

@@ -9,17 +9,17 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
 
 
         <TextView
-            android:text="Register with Document"
-            android:textSize="18sp"
-            android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="Register with Document"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
 
 
     </android.support.v7.widget.Toolbar>
@@ -28,34 +28,32 @@
         android:id="@+id/indeterminateBar"
         style="@android:style/Widget.Material.ProgressBar.Horizontal"
         android:layout_width="match_parent"
+        android:layout_height="10dp"
         android:indeterminateOnly="true"
         android:progressBackgroundTint="@color/colorWhite"
         android:progressTint="@color/colorAccent"
-        android:layout_height="10dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <ScrollView
-        android:layout_height="0dp"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/toolbar"
         app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        >
+        app:layout_constraintStart_toStartOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            >
+            android:padding="16dp">
 
             <EditText
                 android:id="@+id/uniqueKeyEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_marginVertical="10dp"
+                android:ems="10"
                 android:hint="Unique Key"
                 android:inputType="textPersonName" />
 
@@ -63,44 +61,39 @@
             <Spinner
 
                 android:id="@+id/documentSpinner"
-                android:layout_marginVertical="10dp"
                 android:layout_width="fill_parent"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:layout_marginVertical="10dp" />
 
 
             <EditText
                 android:id="@+id/frontImageURLText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textUri"
                 android:layout_marginVertical="10dp"
-                android:hint="FrontImageURL"/>
+                android:ems="10"
+                android:hint="@string/front_image_url"
+                android:inputType="textUri" />
 
 
             <EditText
                 android:id="@+id/backImageURLText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_marginVertical="10dp"
-                android:inputType="textUri"
-                android:hint="BackImageURL"/>
+                android:ems="10"
+                android:hint="@string/back_image_url"
+                android:inputType="textUri" />
 
 
             <Button
                 android:id="@+id/document_submit_button"
                 android:layout_width="match_parent"
-                android:onClick="registerWithDocument"
                 android:layout_height="wrap_content"
-                android:text="@string/submit_button_text"/>
-
-
+                android:onClick="registerWithDocument"
+                android:text="@string/submit_button_text" />
 
 
         </LinearLayout>
-
-
-
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

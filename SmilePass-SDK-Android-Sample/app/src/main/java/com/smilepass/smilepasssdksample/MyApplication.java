@@ -13,8 +13,8 @@ import com.smilepass.mobilesdk.main.SmilePassRestClient;
 
 public class MyApplication extends Application {
 
-    private final static String API_KEY = "{{API KEY}}";
-    private final static String SMILE_PASS_SERVER_URL = "{{SERVER_UR}}";
+    private final static String API_KEY = "{{API_KEY}}";
+    private final static String SMILE_PASS_SERVER_URL = "{{SERVER_URL}}";
     private SmilePassClient smilePassClient;
 
     @Override

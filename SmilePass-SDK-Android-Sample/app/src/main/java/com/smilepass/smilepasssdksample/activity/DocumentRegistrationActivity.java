@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -112,8 +113,12 @@ public class DocumentRegistrationActivity extends AppCompatActivity implements O
             jsonObject.put("step", "document");
             jsonObject.put("uniqueKey", uniqueKey);
             jsonObject.put("documentId", this.selectedDocumentId);
-            jsonObject.put("frontImageUrl", frontImageUrl);
-            jsonObject.put("backImageUrl", backImageUrl);
+            if (!TextUtils.isEmpty(frontImageUrl)) {
+                jsonObject.put("frontImageUrl", frontImageUrl);
+            }
+            if (!TextUtils.isEmpty(backImageUrl)) {
+                jsonObject.put("backImageUrl", backImageUrl);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
