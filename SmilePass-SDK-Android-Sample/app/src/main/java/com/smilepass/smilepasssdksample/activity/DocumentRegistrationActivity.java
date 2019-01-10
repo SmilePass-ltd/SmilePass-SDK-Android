@@ -86,6 +86,7 @@ public class DocumentRegistrationActivity extends AppCompatActivity implements O
 
     @Override
     public void onRegistrationResponse(JSONObject jsonObject, Throwable throwable) {
+        Log.d(TAG, "onRegistrationResponse(): jsonObject=" + jsonObject + ", throwable=" + throwable);
         setFieldsEnabled(true);
         loadingBar.setVisibility(View.GONE);
         if (throwable != null) {
@@ -99,7 +100,21 @@ public class DocumentRegistrationActivity extends AppCompatActivity implements O
                 DialogUtils.openDialogToShowMessage(this, getString(R.string.unexpected_error));
             }
         } else {
-            DialogUtils.openDialogWithOkBtn(this, getString(R.string.registration_success), getString(R.string.registration_success_message), this);
+            boolean isSuccess = false;
+            if (jsonObject != null) {
+                if (jsonObject.has("status")) {
+                    try {
+                        isSuccess = jsonObject.getBoolean("status");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if (isSuccess) {
+                DialogUtils.openDialogWithOkBtn(this, getString(R.string.registration_success), getString(R.string.registration_success_message), this);
+            } else {
+                DialogUtils.openDialogWithOkBtn(this, getString(R.string.registration_error), getString(R.string.registration_error_message), null);
+            }
         }
     }
 

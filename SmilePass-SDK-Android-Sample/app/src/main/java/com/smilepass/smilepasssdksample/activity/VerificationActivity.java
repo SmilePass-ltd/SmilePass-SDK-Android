@@ -96,12 +96,11 @@ public class VerificationActivity extends AppCompatActivity implements OnVerific
         } else {
             try {
                 boolean status = jsonObject.getBoolean("status");
+                float confidenceScore = (float) jsonObject.getDouble("confidenceScore");
                 if (status) {
-                    float confidenceScore = (float) jsonObject.getDouble("confidenceScore");
                     DialogUtils.openDialogToShowMessage(this, getString(R.string.verified_successfully), getString(R.string.verification_success_with_confidence_x, String.format("%.2f", confidenceScore)));
                 } else {
-                    String message = jsonObject.getString("message");
-                    DialogUtils.openDialogToShowMessage(this, getString(R.string.server_error), message);
+                    DialogUtils.openDialogToShowMessage(this, getString(R.string.verification_failed), getString(R.string.verification_failed_with_confidence_x, String.format("%.2f", confidenceScore)));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

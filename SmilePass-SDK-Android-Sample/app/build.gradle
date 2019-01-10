@@ -6,8 +6,8 @@ android {
         applicationId "com.smilepass.smilepasssdksample"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -26,7 +26,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //SmilePass SDK Dependency.
-    implementation 'com.smilepass.mobilesdk:smilepass:0.0.2-alpha'
+    implementation 'com.smilepass.mobilesdk:smilepass:1.0.0'
 
     //Constraint layout dependency
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

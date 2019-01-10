@@ -99,6 +99,7 @@ For the detailed information on how to register and verify a user using SmilePas
 * [SDK Setup](https://github.com/SmilePass-ltd/SmilePass-SDK-Android/wiki/SmilePass-SDK-Setup)
 * [SmilePass Tutorials](https://github.com/SmilePass-ltd/SmilePass-SDK-Android/wiki/SmilePass-Tutorials)
 * [Troubleshooting](https://github.com/SmilePass-ltd/SmilePass-SDK-Android/wiki/Troubleshooting)
+* [API Documents](https://smilepassapis.docs.apiary.io)
 
 
 ## License
