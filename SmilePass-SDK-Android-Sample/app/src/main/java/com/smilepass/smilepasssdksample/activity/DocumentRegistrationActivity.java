@@ -101,10 +101,15 @@ public class DocumentRegistrationActivity extends AppCompatActivity implements O
             }
         } else {
             boolean isSuccess = false;
+            String message = null;
             if (jsonObject != null) {
                 if (jsonObject.has("status")) {
                     try {
                         isSuccess = jsonObject.getBoolean("status");
+                        if (!isSuccess) {
+                            if (jsonObject.has("message"))
+                                message = jsonObject.getString("message");
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -113,7 +118,11 @@ public class DocumentRegistrationActivity extends AppCompatActivity implements O
             if (isSuccess) {
                 DialogUtils.openDialogWithOkBtn(this, getString(R.string.registration_success), getString(R.string.registration_success_message), this);
             } else {
-                DialogUtils.openDialogWithOkBtn(this, getString(R.string.registration_error), getString(R.string.registration_error_message), null);
+                if (!TextUtils.isEmpty(message)) {
+                    DialogUtils.openDialogWithOkBtn(this, getString(R.string.registration_error), message, null);
+                } else {
+                    DialogUtils.openDialogWithOkBtn(this, getString(R.string.registration_error), getString(R.string.registration_error_message), null);
+                }
             }
         }
     }
